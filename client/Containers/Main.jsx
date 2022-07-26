@@ -4,17 +4,19 @@ import CardsDisplay from './CardsDisplay';
 export default function Main() {
 
 const [currentLocation, setLocation] = useState('Select A Location');
-const [currentRoute, setRoute] = useState(' ');
-const [routeOptions, setRouteOptions] = useState(' ');
+const [currentRoute, setRoute] = useState('');
+const [routeOptions, setRouteOptions] = useState('');
 const [locations, setLocations] = useState();
 
   useEffect(() => {
     fetch('/getLocations')
       .then(res => res.json())
       .then(data => {
-        setLocations(data.map(location => <option key={`${location._id}`} value={location._id}>{location.location_name}</option>));
+        data.unshift({id: 0, location_name: "Select a location", zip:''});
+        setLocations(data.map(location => <option key={`${location.id}_${location.location_name}`} value={location.id}>{location.location_name}</option>));
       })
-  }, []);
+
+    }, []);
     //const options = locations.map(location => <option key={`${location._id}`} value={location._id}>{location.location_name}</option>);
   
  
@@ -25,6 +27,7 @@ const [locations, setLocations] = useState();
     
   const getRoutes = (e) => {
   console.log(e.target.value);
+  console.log('get routes ran!!!!!')
   setLocation(e.target.value);
 
  /*
@@ -63,13 +66,13 @@ setRouteOptions(routes.map(route => <option key={`${route._id}`} value={route._i
   return (
     <div className='main'>
       <div className='menu' >
-          <select name='locations' id='locations' onChange={getRoutes} value={currentLocation} label="Select a location">
+        <select name='locations' id='locations' onChange={getRoutes} value={currentLocation} label={"Select a location"}>
           {locations}
-           </select>
-       
-           <select name='route' id='route' onChange={getExperiances} value={currentRoute} label="Select a Route">
-           {routeOptions}
-           </select>
+        </select>
+      
+        <select name='route' id='route' onChange={getExperiances} value={currentRoute} label="Select a Route">
+          {routeOptions}
+        </select>
       </div>
       
       <CardsDisplay/>
