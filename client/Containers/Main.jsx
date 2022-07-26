@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import CardsDisplay from './CardsDisplay';
 
 export default function Main() {
@@ -6,16 +6,16 @@ export default function Main() {
 const [currentLocation, setLocation] = useState('Select A Location');
 const [currentRoute, setRoute] = useState(' ');
 const [routeOptions, setRouteOptions] = useState(' ');
-let routes = null; 
+const [locations, setLocations] = useState();
 
-
-  const locations = 
-    [ {_id: 1, location_name: 'Los Angeles' }, 
-      {_id: 2, location_name: 'New York' }, 
-      {_id: 3, location_name: 'San Diego' }, 
-    ];
-
-    const options = locations.map(location => <option key={`${location._id}`} value={location._id}>{location.location_name}</option>);
+  useEffect(() => {
+    fetch('/getLocations')
+      .then(res => res.json())
+      .then(data => {
+        setLocations(data.map(location => <option key={`${location._id}`} value={location._id}>{location.location_name}</option>));
+      })
+  }, []);
+    //const options = locations.map(location => <option key={`${location._id}`} value={location._id}>{location.location_name}</option>);
   
  
   /*
@@ -64,7 +64,7 @@ setRouteOptions(routes.map(route => <option key={`${route._id}`} value={route._i
     <div className='main'>
       <div className='menu' >
           <select name='locations' id='locations' onChange={getRoutes} value={currentLocation} label="Select a location">
-          {options}
+          {locations}
            </select>
        
            <select name='route' id='route' onChange={getExperiances} value={currentRoute} label="Select a Route">
