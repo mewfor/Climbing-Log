@@ -24,8 +24,8 @@ let routes = null;
 
     
   const getRoutes = (e) => {
-    console.log(e.target.value);
-    setLocation(e.target.value);
+  console.log(e.target.value);
+  setLocation(e.target.value);
 
  /*
 Add fetch request here
@@ -40,8 +40,7 @@ Assign results from fetch request to routes state */
   {_id: 3,  route_name: 'route C', photo_url: 'https://a.cdn-hotels.com/gdcs/production51/d772/648801ad-122b-4e17-ad6a-78b719956c5e.jpg', location: 1, difficulty: 'easy'} ]; 
 
 setRouteOptions(routes.map(route => <option key={`${route._id}`} value={route._id}>{route.route_name}</option>));
-
-  }
+}
 
   /*
   makes GET request to server to get ALL locations available
@@ -62,16 +61,18 @@ setRouteOptions(routes.map(route => <option key={`${route._id}`} value={route._i
 
 
   return (
-    <div>
-      <div>
-        <select name='locations' id='locations' onChange={getRoutes} value={currentLocation} label="Select a location">
+    <div className='main'>
+      <div className='menu' >
+          <select name='locations' id='locations' onChange={getRoutes} value={currentLocation} label="Select a location">
           {options}
-        </select>
-        <select name='route' id='route' onChange={getExperiances} value={currentRoute} label="Select a Route">
-        {routeOptions}
-        </select>
+           </select>
+       
+           <select name='route' id='route' onChange={getExperiances} value={currentRoute} label="Select a Route">
+           {routeOptions}
+           </select>
       </div>
-      <CardsDisplay />
+      
+      <CardsDisplay/>
     </div>
   )
 }

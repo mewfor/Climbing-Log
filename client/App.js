@@ -5,10 +5,10 @@ import Navbar from './Containers/Navbar';
 
 function App() {
   return (
-    <>
-     
+    <div className='app'>
+      <Navbar />
       <Main />
-    </>
+    </div>
   )
 }
 
