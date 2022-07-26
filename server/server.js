@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require ('path');
-import authRouter from './routes/authRoutes';
-import experienceRouter from './routes/experiencesRoutes';
+const authRouter = require('./routes/authRoutes');
+const experienceRouter = require('./routes/experiencesRoutes');
+const getLocationController = require('./controllers/getLocationController');
+const routesController = require('./controllers/routesController')
 
 
 const app = express();
@@ -14,6 +16,14 @@ app.use('/auth', authRouter)
 app.use('/experiences', experienceRouter)
 
 
+
+app.use('/getLocations', getLocationController.getLocations, (req, res) => {
+    return res.status(200).json(res.locals.locations);
+})
+
+app.use('/routes', routesController.getRoutes, (req, res) => {
+    return res.status(200).json(res.locals.routes)
+})
 
 
 app.get('/', (req, res) => {
