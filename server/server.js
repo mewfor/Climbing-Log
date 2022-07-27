@@ -22,8 +22,7 @@ app.get('/getLocations', getLocationController.getLocations, (req, res) => {
     return res.status(200).json(res.locals.locations);
 })
 
-app.get('/routes/:location_id', routesController.getRoutes, (req, res) => {
-    console.log('/routes called');
+app.use('/routes/:location_id', routesController.getRoutes, (req, res) => {
     return res.status(200).json(res.locals.routes)
 })
 
@@ -32,11 +31,6 @@ app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 })
 
-// GET request to get locations
-    // Res = array of objects
-
-// GET request to get routes
-    // Res = array of objects
 
 app.get('*', (req, res) => {
     res.sendStatus(404)
