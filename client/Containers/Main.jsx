@@ -8,7 +8,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-//import Table from '../component'
+
+
 
 export default function Main() {
 
@@ -18,22 +19,26 @@ export default function Main() {
   const [locations, setLocations] = useState();
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = (e) => {
-    console.log('handleClickOpen', e);
+  const handleClickOpen = (routeObj) => {
+
 
     //Grab id from e object
     // invoke fetch request GET to obtain experiances 
     //for each record, show on table ?
 
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ location_id: e.target.value })
+     
     };
-    fetch('/routes', requestOptions)
+
+
+    fetch('/experiences/'+'1'+'-'+ routeObj.id, requestOptions)
     .then(res => res.json())
     .then(data => {
-      setRouteOptions(data.map(route => <RouteCard onClick={() => handleClickOpen(route)} key={`${route.id}`} id={route.id}  name={route.route_name} difficulty={route.difficulty} photo_url={route.photo_url} location_id={route.location_id} />));
+     console.log('data------->')
+     console.log(data);
+
     })       
   .catch(error => console.error('There was an error!', error)); 
 
@@ -73,13 +78,13 @@ export default function Main() {
 
   
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ location_id: e.target.value })
+     
     };
 
 
-    fetch('/routes', requestOptions)
+    fetch('/routes/'+ e.target.value, requestOptions)
         .then(res => res.json())
         .then(data => {
           setRouteOptions(data.map(route => <RouteCard onClick={() => handleClickOpen(route)} key={`${route.id}`} id={route.id}  name={route.route_name} difficulty={route.difficulty} photo_url={route.photo_url} location_id={route.location_id} />));
@@ -127,7 +132,7 @@ export default function Main() {
       </div>
       <CardsDisplay cards={routeOptions}/>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>View Experiences</DialogTitle>
         <DialogContent>
           <DialogContentText>
             To subscribe to this website, please enter your email address here. We
@@ -142,7 +147,9 @@ export default function Main() {
             fullWidth
             variant="standard"
           />
+       
         </DialogContent>
+       
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose}>Subscribe</Button>

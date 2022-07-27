@@ -3,20 +3,14 @@ const experiencesController = require('../controllers/experiencesController');
 
 const experienceRouter = express.Router()
 
-experienceRouter.get('/', (req, res) => {
-    console.log('get exp invoked api router')
-     return res.statusMessage(200)
-     //return res.status(200).json(res.locals.experiences);
- })
 
 
-/*
-experienceRouter.get('/', experiencesController.getExperiences, (req, res) => {
-   console.log('get exp invoked api router')
-    
+
+
+experienceRouter.get('/:user_id-:route_id', experiencesController.getExperiences, (req, res) => {
     return res.status(200).json(res.locals.experiences);
-})
-*/
+});
+
 // GET request for experiences
     // return all experiences
 
