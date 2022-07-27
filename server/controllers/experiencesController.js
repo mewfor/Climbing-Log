@@ -4,14 +4,22 @@ const experiencesController = {};
 
 experiencesController.getExperiences = async (req, res, next) => {
   //user_id and route_id expected
-  console.log('get exp invoked')
-    let user_id = req.params.user_id
-    let route_id = req.params.route_id
+  let user_id, route_id;
+  //console.log('req.body.user_id-->', req.body.user_id)
+  
+  if(req.body.user_id) {
+    user_id = req.body.user_id;
+    route_id = req.body.route_id;
+  }
+  else {
+    user_id = req.params.user_id
+    route_id = req.params.route_id
+  }
   const values = [user_id, route_id];
   try {
     const text = 'SELECT * FROM "public"."experience" WHERE user_id=$1 AND route_id=$2'
     const result = await db.query(text, values);
-    console.log('result-->', result)
+    //console.log('result-->', result)
     res.locals.experiences = result.rows;
     next();
   }
@@ -31,7 +39,7 @@ experiencesController.createExperience = async (req, res, next) => {
 
         const result = await db.query(text, values)
         // need to make sure that we are returning the newly created row
-        console.log('result -> ', result.rows)
+        //console.log('result -> ', result.rows)
         res.locals.newExperience = result.rows
         return next();
     }
@@ -51,7 +59,7 @@ experiencesController.deleteExperience = async (req, res, next) => {
     const values = [id]
     try {
       const result = await db.query(text, values)
-      console.log('result -> ', result)
+      //console.log('result -> ', result)
       res.locals.deleted = result
       return next()
     }
@@ -70,7 +78,7 @@ experiencesController.updateExperience = async (req, res, next) => {
     try{
         const result = await db.query(text, values)
         //missing res.locals
-        console.log('result -> ', result)
+        //console.log('result -> ', result)
         res.locals.updated = result
         return next();
     }

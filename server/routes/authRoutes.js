@@ -3,8 +3,8 @@ const authController = require('../controllers/authController');
 
 const authRouter = express.Router()
 
-authRouter.get('/', authController.login, (req, res) => {
-  res.status(200).json(res.locals.login);
+authRouter.post('/', authController.login, (req, res) => {
+  res.status(200).json(res.locals.user);
 })
 
 // GET rquest for login
