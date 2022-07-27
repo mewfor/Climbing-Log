@@ -9,7 +9,7 @@ routesController.getRoutes = async (req, res, next) => {
     const params = [location_id];
     try {
         const result = await db.query(text, params);
-        console.log('result ->', result)
+        //console.log('result ->', result)
         res.locals.routes = result.rows
         return next()
     }

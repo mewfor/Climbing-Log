@@ -7,7 +7,7 @@ getLocationController.getLocations = async (req, res, next) => {
 
     try {
         const result = await db.query(text)
-        console.log('result ->', result)
+        //console.log('result ->', result)
         res.locals.locations = result.rows
         return next()
     }
