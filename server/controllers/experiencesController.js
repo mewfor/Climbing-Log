@@ -4,6 +4,7 @@ const experiencesController = {};
 
 experiencesController.getExperiences = async (req, res, next) => {
   //user_id and route_id expected
+  console.log('get exp invoked')
   const { user_id, route_id } = req.body;
   const values = [user_id, route_id];
   try {

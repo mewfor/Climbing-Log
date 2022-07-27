@@ -1,15 +1,9 @@
 import React from 'react';
 import RouteCard from '../components/RouteCard';
-export default function CardsDisplay() {
+export default function CardsDisplay(props) {
   return (
     <div className='cardsdisplay'>
-      <RouteCard />
-      <RouteCard />
-      <RouteCard />
-      <RouteCard />
-      <RouteCard />
-      <RouteCard />
-      <RouteCard />
+      {props.cards}
     </div>
   )
 }

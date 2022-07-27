@@ -2,11 +2,11 @@ import React from 'react';
 
 export default function RouteCard(props) {
   return (
-    <div className='routecard'>
-      <img src="https://a.cdn-hotels.com/gdcs/production51/d772/648801ad-122b-4e17-ad6a-78b719956c5e.jpg" alt="" />
-      <h2>Route Name</h2>
-      <h4>Location</h4>
-      <p>Difficulty</p>
+    <div className='routecard' id={props.id} onClick={props.onClick}>
+      <img src={props.photo_url} alt="" />
+      <h2>Route Name: {props.name}</h2>
+      <h4>Location: {props.location_id}</h4>
+      <p>Difficulty: {props.difficulty}</p>
     </div>
   )
 }
