@@ -8,20 +8,23 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Experiences from '../components/Experiences';
+import Rows from '../components/Rows';
 
 
+export default function Main({ user_id }) {
 
-export default function Main() {
-
+  //Main state
   const [currentLocation, setLocation] = useState('Select A Location');
   const [currentRoute, setRoute] = useState('');
   const [routeOptions, setRouteOptions] = useState('');
   const [locations, setLocations] = useState();
   const [open, setOpen] = React.useState(false);
-
+  const [experiances, setExperiances] = React.useState();
+  
   const handleClickOpen = (routeObj) => {
 
-
+    console.log('routeObj-----in HandleClickOpen', routeObj);
     //Grab id from e object
     // invoke fetch request GET to obtain experiances 
     //for each record, show on table ?
@@ -31,18 +34,31 @@ export default function Main() {
       headers: { 'Content-Type': 'application/json' },
      
     };
+    console.log('user_id', user_id);
+    console.log('route_id---->', routeObj.id)
+    fetch('/experiences/'+`${user_id}`+'-'+ routeObj.id, requestOptions)
+      .then(res => res.json())
+      .then(data => {
+      console.log('experiances------>',data);
+        setExperiances(data.map(rows => <Rows 
+          key={`${rows.id}_${rows.date_created}`} 
+          id={rows.id} 
+          attempted = {rows.attempted_top_rope + rows.attempted_lead}
+          completed = {rows.completed_top_rope + rows.completed_lead + rows.completed_cleanly}
+          attempted_top_rope={rows.attempted_top_rope}
+          attempted_lead={rows.attempted_lead}
+          completed_top_rope={rows.completed_top_rope}
+          completed_lead={rows.completed_lead}
+          completed_cleanly={rows.completed_cleanly}
+          route_id={rows.route_id}
+          user_id={rows.user_id}
+          date_created= {rows.date_created.slice(0,10)}
+          date_modified= {rows.date_modified.slice(0,10)}
+          notes= {rows.notes} 
+        />));
+      })       
+      .catch(error => console.error('There was an error!', error)); 
 
-
-    fetch('/experiences/'+'1'+'-'+ routeObj.id, requestOptions)
-    .then(res => res.json())
-    .then(data => {
-     console.log('data------->')
-     console.log(data);
-
-    })       
-  .catch(error => console.error('There was an error!', error)); 
-
-  
     setOpen(true);
   };
 
@@ -87,7 +103,8 @@ export default function Main() {
     fetch('/routes/'+ e.target.value, requestOptions)
         .then(res => res.json())
         .then(data => {
-          setRouteOptions(data.map(route => <RouteCard onClick={() => handleClickOpen(route)} key={`${route.id}`} id={route.id}  name={route.route_name} difficulty={route.difficulty} photo_url={route.photo_url} location_id={route.location_id} />));
+          console.log(data);
+          setRouteOptions(data.map(route => <RouteCard onClick={() => handleClickOpen(route)} key={`${route.id}_${route.route_name}`} id={route.id}  name={route.route_name} difficulty={route.difficulty} photo_url={route.photo_url} location_name={route.location_name} />));
         })       
       .catch(error => console.error('There was an error!', error)); 
 
@@ -135,27 +152,26 @@ export default function Main() {
         <DialogTitle>View Experiences</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Experiance History 
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
+            label="UserName"
             type="email"
             fullWidth
             variant="standard"
           />
-       
+        <Button>Create</Button>
+        <Experiences rows={experiances}/>
         </DialogContent>
        
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Close</Button>
+        
         </DialogActions>
       </Dialog>
-     
     </div>
   )
 }
