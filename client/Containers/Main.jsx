@@ -12,7 +12,7 @@ import Experiences from '../components/Experiences';
 import Rows from '../components/Rows';
 
 
-export default function Main() {
+export default function Main({ user_id }) {
 
   //Main state
   const [currentLocation, setLocation] = useState('Select A Location');
@@ -21,9 +21,10 @@ export default function Main() {
   const [locations, setLocations] = useState();
   const [open, setOpen] = React.useState(false);
   const [experiances, setExperiances] = React.useState();
+  
   const handleClickOpen = (routeObj) => {
 
- console.log('routeObj-----in HandleClickOpen', routeObj);
+    console.log('routeObj-----in HandleClickOpen', routeObj);
     //Grab id from e object
     // invoke fetch request GET to obtain experiances 
     //for each record, show on table ?
@@ -33,32 +34,31 @@ export default function Main() {
       headers: { 'Content-Type': 'application/json' },
      
     };
-
+    console.log('user_id', user_id);
     console.log('route_id---->', routeObj.id)
-    fetch('/experiences/'+'1'+'-'+ routeObj.id, requestOptions)
-    .then(res => res.json())
-    .then(data => {
-     console.log('experiances------>',data);
-      setExperiances(data.map(rows => <Rows 
-        key={`${rows.id}_${rows.date_created}`} 
-        id={rows.id} 
-        attempted = {rows.attempted_top_rope + rows.attempted_lead}
-        completed = {rows.completed_top_rope + rows.completed_lead + rows.completed_cleanly}
-        attempted_top_rope={rows.attempted_top_rope}
-        attempted_lead={rows.attempted_lead}
-        completed_top_rope={rows.completed_top_rope}
-        completed_lead={rows.completed_lead}
-        completed_cleanly={rows.completed_cleanly}
-        route_id={rows.route_id}
-        user_id={rows.user_id}
-        date_created= {rows.date_created.slice(0,10)}
-        date_modified= {rows.date_modified.slice(0,10)}
-        notes= {rows.notes} 
-      />));
-    })       
-  .catch(error => console.error('There was an error!', error)); 
+    fetch('/experiences/'+`${user_id}`+'-'+ routeObj.id, requestOptions)
+      .then(res => res.json())
+      .then(data => {
+      console.log('experiances------>',data);
+        setExperiances(data.map(rows => <Rows 
+          key={`${rows.id}_${rows.date_created}`} 
+          id={rows.id} 
+          attempted = {rows.attempted_top_rope + rows.attempted_lead}
+          completed = {rows.completed_top_rope + rows.completed_lead + rows.completed_cleanly}
+          attempted_top_rope={rows.attempted_top_rope}
+          attempted_lead={rows.attempted_lead}
+          completed_top_rope={rows.completed_top_rope}
+          completed_lead={rows.completed_lead}
+          completed_cleanly={rows.completed_cleanly}
+          route_id={rows.route_id}
+          user_id={rows.user_id}
+          date_created= {rows.date_created.slice(0,10)}
+          date_modified= {rows.date_modified.slice(0,10)}
+          notes= {rows.notes} 
+        />));
+      })       
+      .catch(error => console.error('There was an error!', error)); 
 
-  
     setOpen(true);
   };
 
@@ -152,27 +152,26 @@ export default function Main() {
         <DialogTitle>View Experiences</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Experiance History 
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
+            label="UserName"
             type="email"
             fullWidth
             variant="standard"
           />
-       
+        <Button>Create</Button>
+        <Experiences rows={experiances}/>
         </DialogContent>
        
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Close</Button>
+        
         </DialogActions>
       </Dialog>
-      <Experiences rows={experiances}/>
     </div>
   )
 }

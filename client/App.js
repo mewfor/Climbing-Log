@@ -11,7 +11,7 @@ function App() {
   return (
     <div className='app'>
       <Navbar user_id={user_id} setUser={setUser}/>
-      <Main />
+      <Main user_id={user_id}/>
     </div>
   )
 }
