@@ -3,25 +3,22 @@ const experiencesController = require('../controllers/experiencesController');
 
 const experienceRouter = express.Router()
 
-experienceRouter.get('/', experiencesController.getExperiences, (req, res) => {
+experienceRouter.get('/:user_id-:route_id', experiencesController.getExperiences, (req, res) => {
     return res.status(200).json(res.locals.experiences);
 })
-// GET request for experiences
-    // return all experiences
 
-// POST request for expereinces
-    // return new experience
-
-experienceRouter.post('/', experiencesController.createExperience, (req, res) => {
-    return res.status(200).json(res.locals.newExpereince)
+experienceRouter.post('/', experiencesController.createExperience, experiencesController.getExperiences, (req, res) => {
+    return res.status(200).json(res.locals.experiences)
 })
     
 
-// DELETE request for expereinces
-    // return success
-    
+experienceRouter.delete('/', experiencesController.deleteExperience, (req, res) => {
+    return res.status(200).json(res.locals.deleted)
+})
 
-// UPDATE request for experiences
-    // return success
+experienceRouter.patch('/', experiencesController.updateExperience, (req, res) => {
+    return res.status(200).json(res.locals.updated)
+})
+
 
 module.exports = experienceRouter
