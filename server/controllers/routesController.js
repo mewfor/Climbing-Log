@@ -5,7 +5,7 @@ const routesController = {}
 routesController.getRoutes = async (req, res, next) => {
     //const { location_id } = req.body;
     const location_id = req.params.location_id;
-    const text = 'SELECT * FROM routes LEFT JOIN locations ON routes.location_id = locations.id WHERE location_id=$1'
+    const text = 'SELECT routes.id, routes.route_name, routes.difficulty, routes.photo_url, locations.location_name FROM routes LEFT JOIN locations ON routes.location_id = locations.id WHERE location_id=$1';
     const params = [location_id];
     try {
         const result = await db.query(text, params);
