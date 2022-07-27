@@ -5,13 +5,14 @@ const authController = {}
 authController.login = async (req, res, next) => {
   //expecting a user_name and password
   const { user_name, password } = req.body;
+  //console.log('req.body.user_name-->', )
   try{
     const params = [user_name, password];
     const text = 'SELECT * FROM "public"."users" WHERE user_name=$1 AND password=$2'
     const result = await db.query(text, params);
     console.log(result);
-    if(result.rows.length > 0) res.locals.login = true;
-    else res.locals.login = false;
+    if(result.rows.length > 0) res.locals.user = result.rows[0].id;
+    else res.send('login failed');
     next();
   }
   catch (err) {
