@@ -17,11 +17,13 @@ app.use('/experiences', experienceRouter)
 
 
 
-app.use('/getLocations', getLocationController.getLocations, (req, res) => {
+app.get('/getLocations', getLocationController.getLocations, (req, res) => {
+    console.log('get locations---->')
     return res.status(200).json(res.locals.locations);
 })
 
-app.use('/routes', routesController.getRoutes, (req, res) => {
+app.get('/routes/:location_id', routesController.getRoutes, (req, res) => {
+    console.log('/routes called');
     return res.status(200).json(res.locals.routes)
 })
 
