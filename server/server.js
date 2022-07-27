@@ -17,7 +17,8 @@ app.use('/experiences', experienceRouter)
 
 
 
-app.use('/getLocations', getLocationController.getLocations, (req, res) => {
+app.get('/getLocations', getLocationController.getLocations, (req, res) => {
+    console.log('get locations---->')
     return res.status(200).json(res.locals.locations);
 })
 

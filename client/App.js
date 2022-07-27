@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import Main from './Containers/Main';
+import Navbar from './Containers/Navbar';
 
-class App extends Component {
-    constructor(props) {
-      super(props)
-    }
 
-    render() {
-        let test = "Hello Mewfor";
-         return (
-         <div>
-           {test} 
-        </div>        
-         );
-            }
-    }
+function App() {
+  return (
+    <div className='app'>
+      <Navbar />
+      <Main />
+    </div>
+  )
+}
 
-    export default App;
+export default App;

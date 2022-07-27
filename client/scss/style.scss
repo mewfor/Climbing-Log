@@ -1,0 +1,55 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+}
+
+.navbar {
+background-color: red;
+border-color: black;
+display: flex;
+justify-content: space-between;
+padding: 10px;
+  img{
+    height: 50px;
+  }
+}
+
+.menu {
+background-color: grey;
+border-color: black;
+width:100%;
+display: flex;
+justify-content: center;
+ 
+  select {
+    margin: 5px;
+  }
+}
+
+.main { 
+background-color: green;
+border-color: aqua;
+display: flex;
+flex-direction: column;
+align-content: center;
+}
+
+.cardsdisplay {
+background-color: pink;
+border-color: black;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+}
+
+.routecard {
+background-color: blue;
+border-color: black;
+min-width: 250px;
+max-width: 400px;
+margin: 20px;
+  img {
+    width: 100%;
+  }
+}

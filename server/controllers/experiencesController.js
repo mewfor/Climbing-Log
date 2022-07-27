@@ -4,18 +4,9 @@ const experiencesController = {};
 
 experiencesController.getExperiences = async (req, res, next) => {
   //user_id and route_id expected
-
-  let user_id, route_id;
-  console.log('req.body.user_id-->', req.body.user_id)
-  
-  if(req.body.user_id) {
-    user_id = req.body.user_id;
-    route_id = req.body.route_id;
-  }
-  else {
-    user_id = req.params.user_id
-    route_id = req.params.route_id
-  }
+  console.log('get exp invoked')
+    let user_id = req.params.user_id
+    let route_id = req.params.route_id
   const values = [user_id, route_id];
   try {
     const text = 'SELECT * FROM "public"."experience" WHERE user_id=$1 AND route_id=$2'
